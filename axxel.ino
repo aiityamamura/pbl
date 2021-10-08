@@ -12,7 +12,18 @@ float threshold = 0;
 int countSample = 0;
 float range = 50.0;
 
-uint8_t countStep = 0;giy 
+uint8_t countStep = 0;
+
+float getDynamicThreshold(float *s) {
+    float maxVal = s[0];
+    float minVal = s[0];
+    for (int i=1; i<sizeof(s); i++) {
+        maxVal = max(maxVal, s[i]);
+        minVal = min(minVal, s[i]);
+    }
+    return (maxVal + minVal) / 2.0;
+}
+
 float getFilterdAccelData() {
     static float y[2] = {0};
     M5.IMU.getAccelData(&accX,&accY,&accZ);
